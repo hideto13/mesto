@@ -1,8 +1,8 @@
 .header {
   display: flex;
-  padding: 45px 200px 0;
+  padding-top: 45px;
   box-sizing: border-box;
   justify-content: flex-start;
-  max-width: 1280px;
-  border-bottom: 1px solid #545454;
+  max-width: 880px;
+  border-bottom: 1px solid rgba(84, 84, 84, .7);;
 }
