@@ -4,4 +4,9 @@
   background-color: transparent;
   cursor: pointer;
   line-height: 0;
+  transition: opacity .3s ease;
+}
+
+.card__like-button:hover {
+  opacity: 0.5;
 }
