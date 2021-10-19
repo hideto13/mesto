@@ -1,5 +1,10 @@
 .profile__add-button {
-  padding: 14px 64px;
+  width: 150px;
+  height: 50px;
+  background: transparent center url("../../../images/__add-button.svg");
+  background-size: 22px 22px;
+  background-repeat: no-repeat;
+  padding: 0;
   border: 2px solid white;
   background-color: transparent;
   cursor: pointer;
@@ -13,6 +18,8 @@
 
 @media (max-width: 767px) {
   .profile__add-button {
-    padding: 17px 132px;
+    width: 282px;
+    height: 50px;
+    background-size: 16px 16px;
   }
 }

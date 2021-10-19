@@ -7,3 +7,9 @@
   margin-bottom: 48px;
   padding-bottom: 13px;
 }
+
+@media (max-width: 767px) {
+  .popup__text-input {
+    margin-bottom: 45px;
+  }
+}
