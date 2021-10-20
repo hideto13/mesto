@@ -8,6 +8,7 @@
   padding: 14px 124px;
   transition: opacity .3s ease;
   cursor: pointer;
+  border: none;
 }
 
 .popup__submit-button:hover {

@@ -10,17 +10,19 @@
   <body class="page">
     <div class="page__container">
       <header class="header">
-        <img class="header__logo" src="./images/logo.png" alt="Логотип">
+        <img class="header__logo" src="./images/logo.svg" alt="Логотип">
       </header>
       <main>
         <section class="profile page__profile">
           <div class="profile__container">
             <img class="profile__image" src="./images/kusto.jpg" alt="Кусто">
             <div class="profile__info">
-              <h1 class="profile__title">Жак-Ив Кусто</h1>
+              <div class="profile__wrapper">
+                <h1 class="profile__title">Жак-Ив Кусто</h1>
+                <button class="profile__edit-button" type="button"></button>
+              </div>
               <p class="profile__subtitle">Исследователь океана</p>
             </div>
-            <button class="profile__edit-button" type="button"></button>
           </div>
           <button class="profile__add-button" type="button"></button>
         </section>
@@ -29,42 +31,42 @@
             <li class="card">
               <img class="card__image" src="./images/karachaevsk.jpg" alt="Карачаевск">
               <div class="card__description">
-                <p class="card__text">Карачаевск</p>
+                <h2 class="card__text">Карачаевск</h2>
                 <button class="card__like-button" type="button"></button>
               </div>
             </li>
             <li class="card">
               <img class="card__image" src="./images/elbrus.jpg" alt="Эльбрус">
               <div class="card__description">
-                <p class="card__text">Гора Эльбрус</p>
+                <h2 class="card__text">Гора Эльбрус</h2>
                 <button class="card__like-button" type="button"></button>
               </div>
             </li>
             <li class="card">
               <img class="card__image" src="./images/dombai.jpg" alt="Домбай">
               <div class="card__description">
-                <p class="card__text">Домбай</p>
+                <h2 class="card__text">Домбай</h2>
                 <button class="card__like-button"></button>
               </div>
             </li>
             <li class="card">
               <img class="card__image" src="./images/elbrus.jpg" alt="Эльбрус">
               <div class="card__description">
-                <p class="card__text">Гора Эльбрус</p>
+                <h2 class="card__text">Гора Эльбрус</h2>
                 <button class="card__like-button" type="button"></button>
               </div>
             </li>
             <li class="card">
               <img class="card__image" src="./images/dombai.jpg" alt="Домбай">
               <div class="card__description">
-                <p class="card__text">Домбай</p>
+                <h2 class="card__text">Домбай</h2>
                 <button class="card__like-button" type="button"></button>
               </div>
             </li>
             <li class="card">
               <img class="card__image" src="./images/karachaevsk.jpg" alt="Карачаевск">
               <div class="card__description">
-                <p class="card__text">Карачаево-Черкесия</p>
+                <h2 class="card__text">Карачаево-Черкесия</h2>
                 <button class="card__like-button" type="button"></button>
               </div>
             </li>
@@ -77,10 +79,10 @@
       <section class="popup">
         <div class="popup__container">
           <button class="popup__close" type="button"></button>
-          <form class="popup__form">
-            <h2 class="popup__title">Редактировать профиль</h2>
-            <input class="popup__name-input" value="Жак-Ив Кусто">
-            <input class="popup__text-input" value="Исследователь океана">
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <form class="popup__form" name="form">
+            <input class="popup__input popup__input_field_name" value="Жак-Ив Кусто" name="name" placeholder="Ваше имя">
+            <input class="popup__input popup__input_field_text" value="Исследователь океана" name="text" placeholder="Ваш род деятельности">
             <button class="popup__submit-button" type="submit">Сохранить</button>
           </form>
         </div>
