@@ -26,24 +26,34 @@ const initialCards = [
 ];
 const cardsList = document.querySelector('.cards__list');
 const cardTemplate = document.querySelector('.card_template');
-const popupOpenButtonElement = document.querySelector('.profile__edit-button')
-const popupElement = document.querySelector('.popup')
-const popupCloseButtonElement = popupElement.querySelector('.popup__close')
+const popupProfileOpenButtonElement = document.querySelector('.profile__edit-button')
+const popupCardOpenButtonElement = document.querySelector('.profile__add-button')
+const popupProfileElement = document.querySelector('.popup_profile')
+const popupCardElement = document.querySelector('.popup_card')
+const popupProfileCloseButtonElement = popupProfileElement.querySelector('.popup__close')
+const popupCardCloseButtonElement = popupCardElement.querySelector('.popup__close')
 const profileTitleElement = document.querySelector('.profile__title')
 const profileSubtitleElement = document.querySelector('.profile__subtitle')
-const popupNameInputElement = popupElement.querySelector('.popup__input_field_name')
-const popupTextInputElement = popupElement.querySelector('.popup__input_field_text')
-const popupFormElement = popupElement.querySelector('.popup__form')
+const popupNameInputElement = popupProfileElement.querySelector('.popup__input_field_name')
+const popupTextInputElement = popupProfileElement.querySelector('.popup__input_field_text')
+const popupTitleInputElement = popupCardElement.querySelector('.popup__input_field_title')
+const popupLinkInputElement = popupCardElement.querySelector('.popup__input_field_link')
+const popupProfileFormElement = popupProfileElement.querySelector('.popup__form')
+const popupCardFormElement = popupCardElement.querySelector('.popup__form')
 
 function main() {
 	initialCards.forEach((element) => {
 		renderCard(element.name, element.link);
 	})
 
-	popupOpenButtonElement.addEventListener('click', openPopup)
-  popupCloseButtonElement.addEventListener('click', closePopup)
-  popupElement.addEventListener('click', closePopupByClickOnOverlay)
-  popupFormElement.addEventListener('submit', formSubmitHandler)
+	popupProfileOpenButtonElement.addEventListener('click', openPopup)
+  popupCardOpenButtonElement.addEventListener('click', openPopup)
+  popupProfileCloseButtonElement.addEventListener('click', closePopup)
+  popupCardCloseButtonElement.addEventListener('click', closePopup)
+  popupProfileElement.addEventListener('click', closePopupByClickOnOverlay)
+  popupCardElement.addEventListener('click', closePopupByClickOnOverlay)
+  popupProfileFormElement.addEventListener('submit', formProfileSubmitHandler)
+  popupCardFormElement.addEventListener('submit', formCardSubmitHandler)
 }
 
 function renderCard(name, link) {
@@ -54,18 +64,24 @@ function renderCard(name, link) {
   htmlElement.querySelector('.card__image').src = link;
   htmlElement.querySelector('.card__image').alt = name;
 
-	cardsList.appendChild(htmlElement);
+	cardsList.insertBefore(htmlElement, cardsList.firstChild);
 
 }
 
-const openPopup = function() {
-  popupNameInputElement.value = profileTitleElement.textContent
-  popupTextInputElement.value = profileSubtitleElement.textContent
-  popupElement.classList.add('popup_opened')
+const openPopup = function(event) {
+  if (event.target === popupProfileOpenButtonElement) {
+    popupNameInputElement.value = profileTitleElement.textContent
+    popupTextInputElement.value = profileSubtitleElement.textContent
+    popupProfileElement.classList.add('popup_opened')
+  };
+  if (event.target === popupCardOpenButtonElement) {
+    popupCardElement.classList.add('popup_opened')
+  };
 }
 
 const closePopup = function() {
-  popupElement.classList.remove('popup_opened')
+  popupProfileElement.classList.remove('popup_opened')
+  popupCardElement.classList.remove('popup_opened')
 }
 
 const closePopupByClickOnOverlay = function(event) {
@@ -74,10 +90,16 @@ const closePopupByClickOnOverlay = function(event) {
   }
 }
 
-const formSubmitHandler = function(evt) {
+const formProfileSubmitHandler = function(evt) {
   evt.preventDefault();
   profileTitleElement.textContent = popupNameInputElement.value
   profileSubtitleElement.textContent = popupTextInputElement.value
+  closePopup()
+}
+
+const formCardSubmitHandler = function(evt) {
+  evt.preventDefault();
+  renderCard(popupTitleInputElement.value, popupLinkInputElement.value)
   closePopup()
 }
 

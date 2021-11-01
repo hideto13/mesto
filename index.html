@@ -33,7 +33,7 @@
       <footer class="footer">
         <p class="footer__copyright">&copy; 2021 Mesto Russia</p>
       </footer>
-      <section class="popup">
+      <section class="popup popup_profile">
         <div class="popup__container">
           <button class="popup__close" type="button"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
@@ -41,6 +41,17 @@
             <input class="popup__input popup__input_field_name" value="Жак-Ив Кусто" name="name" placeholder="Ваше имя">
             <input class="popup__input popup__input_field_text" value="Исследователь океана" name="text" placeholder="Ваш род деятельности">
             <button class="popup__submit-button" type="submit">Сохранить</button>
+          </form>
+        </div>
+      </section>
+      <section class="popup popup_card">
+        <div class="popup__container">
+          <button class="popup__close" type="button"></button>
+          <h2 class="popup__title">Новое место</h2>
+          <form class="popup__form" name="form">
+            <input class="popup__input popup__input_field_title" name="name" placeholder="Название">
+            <input class="popup__input popup__input_field_link" name="text" placeholder="Ссылка на картинку">
+            <button class="popup__submit-button" type="submit">Создать</button>
           </form>
         </div>
       </section>
