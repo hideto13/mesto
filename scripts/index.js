@@ -64,6 +64,8 @@ function renderCard(name, link) {
   htmlElement.querySelector('.card__image').src = link;
   htmlElement.querySelector('.card__image').alt = name;
 
+  setListener(htmlElement);
+
 	cardsList.insertBefore(htmlElement, cardsList.firstChild);
 
 }
@@ -101,6 +103,14 @@ const formCardSubmitHandler = function(evt) {
   evt.preventDefault();
   renderCard(popupTitleInputElement.value, popupLinkInputElement.value)
   closePopup()
+}
+
+const setListener = function(element) {
+  element.querySelector('.card__like-button').addEventListener('click', handleLike);
+}
+
+function handleLike(event) {
+	event.target.classList.toggle('card__like-button_active');
 }
 
 main();
