@@ -40,6 +40,8 @@ const popupTitleInputElement = popupCardElement.querySelector('.popup__input_fie
 const popupLinkInputElement = popupCardElement.querySelector('.popup__input_field_link')
 const popupProfileFormElement = popupProfileElement.querySelector('.popup__form')
 const popupCardFormElement = popupCardElement.querySelector('.popup__form')
+const photoTemplate = document.querySelector('.photo_template');
+const pageElement = document.querySelector('.page');
 
 function main() {
 	initialCards.forEach((element) => {
@@ -70,6 +72,22 @@ function renderCard(name, link) {
 
 }
 
+function renderPhoto(name, link) {
+
+	const htmlElement = photoTemplate.content.cloneNode(true);
+
+	htmlElement.querySelector('.popup__description').innerText = name;
+  htmlElement.querySelector('.popup__image').src = link;
+  htmlElement.querySelector('.popup__image').alt = name;
+
+  htmlElement.querySelector('.popup__close').addEventListener('click', function(event) {
+    event.target.closest('.popup').classList.remove('popup_opened')
+  })
+
+	htmlElement.querySelector('.popup').classList.add('popup_opened')
+  pageElement.appendChild(htmlElement);
+}
+
 const openPopup = function(event) {
   if (event.target === popupProfileOpenButtonElement) {
     popupNameInputElement.value = profileTitleElement.textContent
@@ -77,11 +95,13 @@ const openPopup = function(event) {
     popupProfileElement.classList.add('popup_opened')
   };
   if (event.target === popupCardOpenButtonElement) {
+    popupTitleInputElement.value = null
+    popupLinkInputElement.value = null
     popupCardElement.classList.add('popup_opened')
   };
 }
 
-const closePopup = function() {
+const closePopup = function(event) {
   popupProfileElement.classList.remove('popup_opened')
   popupCardElement.classList.remove('popup_opened')
 }
@@ -107,10 +127,21 @@ const formCardSubmitHandler = function(evt) {
 
 const setListener = function(element) {
   element.querySelector('.card__like-button').addEventListener('click', handleLike);
+  element.querySelector('.card__delete-button').addEventListener('click', handleDelete);
+  element.querySelector('.card__image').addEventListener('click', photoHandler);
 }
 
 function handleLike(event) {
 	event.target.classList.toggle('card__like-button_active');
+}
+
+
+function handleDelete(event) {
+	event.target.closest('.card').remove();
+}
+
+const photoHandler = function(evt) {
+  renderPhoto(evt.target.alt, evt.target.src)
 }
 
 main();
