@@ -78,6 +78,7 @@ function renderPhoto(event) {
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  popup.addEventListener('keydown', closePopupByEscape)
 }
 
 function openProfilePopup() {
@@ -94,6 +95,7 @@ function openCardPopup() {
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  popup.removeEventListener('keydown', closePopupByEscape)
 }
 
 function closeProfilePopup() {
@@ -111,6 +113,13 @@ function closePhotoPopup() {
 const closePopupByClickOnOverlay = function (event) {
   if (event.target === event.currentTarget) {
     closePopup(event.currentTarget);
+  }
+};
+
+const closePopupByEscape = function (event) {
+  const popup = document.querySelector('.popup_opened')
+  if (event.key === 'Escape') {
+    closePopup(popup)
   }
 };
 
