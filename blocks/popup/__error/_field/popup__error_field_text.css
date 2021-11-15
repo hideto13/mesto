@@ -1,9 +1,9 @@
-.popup__input_field_text {
+.popup__error_field_text {
   margin-bottom: 23px;
 }
 
 @media (max-width: 767px) {
-  .popup__input_field_text {
+  .popup__error_field_text {
     margin-bottom: 20px;
   }
 }
