@@ -11,7 +11,7 @@
   border: none;
 }
 
-.popup__submit-button:hover {
+.popup__submit-button:not(:disabled):hover {
   opacity: .8;
 }
 
