@@ -145,14 +145,14 @@ function renderInitialCards() {
   });
 }
 
-function formProfileSubmitHandler(evt) {
+function handleFormProfileSubmit(evt) {
   evt.preventDefault();
   profileTitleElement.textContent = popupNameInputElement.value;
   profileSubtitleElement.textContent = popupTextInputElement.value;
   closePopup(popupProfileElement);
 };
 
-function formCardSubmitHandler(event) {
+function handleFormCardSubmit(event) {
   event.preventDefault();
   renderCard(popupTitleInputElement.value, popupLinkInputElement.value, 'prepend');
   closePopup(popupCardElement);
@@ -166,7 +166,7 @@ popupPhotoCloseButtonElement.addEventListener('click', closePhotoPopup);
 popupPhotoElement.addEventListener('click', closePopupByClickOnOverlay);
 popupProfileElement.addEventListener('click', closePopupByClickOnOverlay);
 popupCardElement.addEventListener('click', closePopupByClickOnOverlay);
-popupProfileFormElement.addEventListener('submit', formProfileSubmitHandler);
-popupCardFormElement.addEventListener('submit', formCardSubmitHandler);
+popupProfileFormElement.addEventListener('submit', handleFormProfileSubmit);
+popupCardFormElement.addEventListener('submit', handleFormCardSubmit);
 
 renderInitialCards();
