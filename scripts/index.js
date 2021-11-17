@@ -95,10 +95,7 @@ function openProfilePopup() {
 
 function openCardPopup() {
   popupCardFormElement.reset();
-  toggleButton(popupCardFormElement, {
-      submitButtonSelector: '.popup__submit-button',
-      inactiveButtonClass: 'popup__submit-button_disabled'
-  })
+  toggleButton(popupCardFormElement, params)
   openPopup(popupCardElement);
 }
 
