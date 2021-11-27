@@ -1,3 +1,14 @@
+import { FormValidator } from './FormValidator.js'
+
+const params = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit-button',
+  inactiveButtonClass: 'popup__submit-button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error'
+}
+
 const initialCards = [
   {
     name: 'Архыз',
@@ -43,7 +54,11 @@ const popupTitleInputElement = popupCardElement.querySelector('.popup__input_fie
 const popupLinkInputElement = popupCardElement.querySelector('.popup__input_field_link');
 const popupProfileFormElement = popupProfileElement.querySelector('.popup__form');
 const popupCardFormElement = popupCardElement.querySelector('.popup__form');
-const pageElement = document.querySelector('.page');
+
+const profileFormValidator = new FormValidator(params, popupProfileFormElement);
+const cardFormValidator = new FormValidator(params, popupCardFormElement);
+profileFormValidator.enableValidation();
+cardFormValidator.enableValidation()
 
 function handleLike(event) {
   event.target.classList.toggle('card__like-button_active');
@@ -95,7 +110,7 @@ function openProfilePopup() {
 
 function openCardPopup() {
   popupCardFormElement.reset();
-  toggleButton(popupCardFormElement, params)
+  cardFormValidator.enableValidation();
   openPopup(popupCardElement);
 }
 
