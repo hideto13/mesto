@@ -57,13 +57,12 @@ const photoPopup = document.querySelector(".popup_photo");
 const cardTemplate = document.querySelector(".card_template").content;
 const cardContainer = document.querySelector(".cards__list");
 
-
 const profileFormValidator = new FormValidator(params, popupProfileFormElement);
 const cardFormValidator = new FormValidator(params, popupCardFormElement);
 
 function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closePopupByEscape)
+  popup.classList.remove("popup_opened");
+  document.removeEventListener("keydown", closePopupByEscape);
 }
 
 function closeProfilePopup() {
@@ -80,30 +79,32 @@ function closePhotoPopup() {
 
 function closePopupByClickOnOverlay(event) {
   if (event.target === event.currentTarget) {
-      closePopup(event.currentTarget);
+    closePopup(event.currentTarget);
   }
-};
+}
 
-function closePopupByEscape(popup, event) {
-  if (event.key === 'Escape') {
-      closePopup(popup)
+function closePopupByEscape(event) {
+  if (event.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_opened");
+    closePopup(openedPopup);
   }
-};
+}
 
 function openPopup(popup) {
-  popup.classList.add('popup_opened');
-  document.addEventListener('keydown', (event) => closePopupByEscape(popup, event))
+  popup.classList.add("popup_opened");
+  document.addEventListener("keydown", closePopupByEscape);
 }
 
 function openProfilePopup() {
   popupNameInputElement.value = profileTitleElement.textContent;
   popupTextInputElement.value = profileSubtitleElement.textContent;
+  profileFormValidator.resetValidation();
   openPopup(popupProfileElement);
 }
 
 function openCardPopup() {
   popupCardFormElement.reset();
-  cardFormValidator.enableValidation();
+  cardFormValidator.resetValidation();
   openPopup(popupCardElement);
 }
 
@@ -118,13 +119,15 @@ function handleFormProfileSubmit(evt) {
   profileTitleElement.textContent = popupNameInputElement.value;
   profileSubtitleElement.textContent = popupTextInputElement.value;
   closePopup(popupProfileElement);
-};
+}
 
 function handleFormCardSubmit(event) {
   event.preventDefault();
-  cardContainer.prepend(new Card(popupTitleInputElement.value, popupLinkInputElement.value, cardTemplate, handleCardClick).createCard());
+  cardContainer.prepend(
+    new Card(popupTitleInputElement.value, popupLinkInputElement.value, cardTemplate, handleCardClick).createCard()
+  );
   closePopup(popupCardElement);
-};
+}
 
 function handleCardClick(name, link) {
   photoPopup.querySelector(".popup__description").textContent = name;
@@ -132,19 +135,19 @@ function handleCardClick(name, link) {
   photoPopup.querySelector(".popup__image").alt = name;
 
   openPopup(photoPopup);
-};
+}
 
-popupProfileOpenButtonElement.addEventListener('click', openProfilePopup);
-popupCardOpenButtonElement.addEventListener('click', openCardPopup);
-popupProfileCloseButtonElement.addEventListener('click', closeProfilePopup);
-popupCardCloseButtonElement.addEventListener('click', closeCardPopup);
-popupPhotoCloseButtonElement.addEventListener('click', closePhotoPopup);
-popupPhotoElement.addEventListener('click', closePopupByClickOnOverlay);
-popupProfileElement.addEventListener('click', closePopupByClickOnOverlay);
-popupCardElement.addEventListener('click', closePopupByClickOnOverlay);
-popupProfileFormElement.addEventListener('submit', handleFormProfileSubmit);
-popupCardFormElement.addEventListener('submit', handleFormCardSubmit);
+popupProfileOpenButtonElement.addEventListener("click", openProfilePopup);
+popupCardOpenButtonElement.addEventListener("click", openCardPopup);
+popupProfileCloseButtonElement.addEventListener("click", closeProfilePopup);
+popupCardCloseButtonElement.addEventListener("click", closeCardPopup);
+popupPhotoCloseButtonElement.addEventListener("click", closePhotoPopup);
+popupPhotoElement.addEventListener("click", closePopupByClickOnOverlay);
+popupProfileElement.addEventListener("click", closePopupByClickOnOverlay);
+popupCardElement.addEventListener("click", closePopupByClickOnOverlay);
+popupProfileFormElement.addEventListener("submit", handleFormProfileSubmit);
+popupCardFormElement.addEventListener("submit", handleFormCardSubmit);
 
 profileFormValidator.enableValidation();
-cardFormValidator.enableValidation()
+cardFormValidator.enableValidation();
 renderInitialCards();
