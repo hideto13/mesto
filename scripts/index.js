@@ -108,9 +108,13 @@ function openCardPopup() {
   openPopup(popupCardElement);
 }
 
+function createCard(name, link) {
+  return new Card(name, link, cardTemplate, handleCardClick).createCard()
+}
+
 function renderInitialCards() {
   initialCards.forEach((element) => {
-    cardContainer.append(new Card(element.name, element.link, cardTemplate, handleCardClick).createCard());
+    cardContainer.append(createCard(element.name, element.link));
   });
 }
 
@@ -123,9 +127,7 @@ function handleFormProfileSubmit(evt) {
 
 function handleFormCardSubmit(event) {
   event.preventDefault();
-  cardContainer.prepend(
-    new Card(popupTitleInputElement.value, popupLinkInputElement.value, cardTemplate, handleCardClick).createCard()
-  );
+  cardContainer.prepend(createCard(popupTitleInputElement.value, popupLinkInputElement.value));
   closePopup(popupCardElement);
 }
 
