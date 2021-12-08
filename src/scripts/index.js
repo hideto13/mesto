@@ -1,5 +1,6 @@
 import { FormValidator } from './FormValidator.js'
 import { Card } from './Card.js'
+import { Section } from './Section.js'
 
 const params = {
   formSelector: '.popup__form',
@@ -112,11 +113,15 @@ function createCard(name, link) {
   return new Card(name, link, cardTemplate, handleCardClick).createCard()
 }
 
-function renderInitialCards() {
-  initialCards.forEach((element) => {
-    cardContainer.append(createCard(element.name, element.link));
-  });
-}
+const cardsList = new Section({
+  items: initialCards,
+  renderer: (item) => {
+      const card = createCard(item.name, item.link);
+      cardsList.addItem(card, 'append');
+    },
+  },
+  cardContainer
+);
 
 function handleFormProfileSubmit(evt) {
   evt.preventDefault();
@@ -127,7 +132,8 @@ function handleFormProfileSubmit(evt) {
 
 function handleFormCardSubmit(event) {
   event.preventDefault();
-  cardContainer.prepend(createCard(popupTitleInputElement.value, popupLinkInputElement.value));
+  const card = createCard(popupTitleInputElement.value, popupLinkInputElement.value);
+  cardsList.addItem(card, 'prepend')
   closePopup(popupCardElement);
 }
 
@@ -152,4 +158,5 @@ popupCardFormElement.addEventListener("submit", handleFormCardSubmit);
 
 profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
-renderInitialCards();
+
+cardsList.renderItems();
