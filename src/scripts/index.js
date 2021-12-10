@@ -2,6 +2,7 @@ import { FormValidator } from './FormValidator.js'
 import { Card } from './Card.js'
 import { Section } from './Section.js'
 import { Popup } from './Popup.js'
+import { PopupWithImage } from './PopupWithImage.js'
 
 const params = {
   formSelector: '.popup__form',
@@ -11,6 +12,7 @@ const params = {
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error'
 }
+
 
 const initialCards = [
   {
@@ -44,8 +46,6 @@ const popupCardOpenButtonElement = document.querySelector('.profile__add-button'
 const popupProfileElement = document.querySelector('.popup_profile');
 const popupCardElement = document.querySelector('.popup_card');
 const popupPhotoElement = document.querySelector('.popup_photo');
-const popupCardCloseButtonElement = popupCardElement.querySelector('.popup__close');
-const popupPhotoCloseButtonElement = popupPhotoElement.querySelector('.popup__close');
 const profileTitleElement = document.querySelector('.profile__title');
 const profileSubtitleElement = document.querySelector('.profile__subtitle');
 const popupNameInputElement = popupProfileElement.querySelector('.popup__input_field_name');
@@ -63,7 +63,7 @@ const cardFormValidator = new FormValidator(params, popupCardFormElement);
 
 const profilePopup = new Popup(popupProfileElement);
 const cardPopup = new Popup(popupCardElement);
-const photoPopup = new Popup(popupPhotoElement);
+const photoPopup = new PopupWithImage(popupPhotoElement);
 
 function openProfilePopup() {
   popupNameInputElement.value = profileTitleElement.textContent;
@@ -107,11 +107,7 @@ function handleFormCardSubmit(event) {
 }
 
 function handleCardClick(name, link) {
-  popupPhotoElement.querySelector(".popup__description").textContent = name;
-  popupPhotoElement.querySelector(".popup__image").src = link;
-  popupPhotoElement.querySelector(".popup__image").alt = name;
-
-  photoPopup.open();
+  photoPopup.open(name, link);
 }
 
 popupProfileOpenButtonElement.addEventListener("click", openProfilePopup);
