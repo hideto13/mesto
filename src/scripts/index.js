@@ -1,6 +1,7 @@
 import { FormValidator } from './FormValidator.js'
 import { Card } from './Card.js'
 import { Section } from './Section.js'
+import { Popup } from './Popup.js'
 
 const params = {
   formSelector: '.popup__form',
@@ -43,7 +44,6 @@ const popupCardOpenButtonElement = document.querySelector('.profile__add-button'
 const popupProfileElement = document.querySelector('.popup_profile');
 const popupCardElement = document.querySelector('.popup_card');
 const popupPhotoElement = document.querySelector('.popup_photo');
-const popupProfileCloseButtonElement = popupProfileElement.querySelector('.popup__close');
 const popupCardCloseButtonElement = popupCardElement.querySelector('.popup__close');
 const popupPhotoCloseButtonElement = popupPhotoElement.querySelector('.popup__close');
 const profileTitleElement = document.querySelector('.profile__title');
@@ -54,59 +54,28 @@ const popupTitleInputElement = popupCardElement.querySelector('.popup__input_fie
 const popupLinkInputElement = popupCardElement.querySelector('.popup__input_field_link');
 const popupProfileFormElement = popupProfileElement.querySelector('.popup__form');
 const popupCardFormElement = popupCardElement.querySelector('.popup__form');
-const photoPopup = document.querySelector(".popup_photo");
 const cardTemplate = document.querySelector(".card_template").content;
 const cardContainer = document.querySelector(".cards__list");
 
 const profileFormValidator = new FormValidator(params, popupProfileFormElement);
 const cardFormValidator = new FormValidator(params, popupCardFormElement);
 
-function closePopup(popup) {
-  popup.classList.remove("popup_opened");
-  document.removeEventListener("keydown", closePopupByEscape);
-}
 
-function closeProfilePopup() {
-  closePopup(popupProfileElement);
-}
-
-function closeCardPopup() {
-  closePopup(popupCardElement);
-}
-
-function closePhotoPopup() {
-  closePopup(popupPhotoElement);
-}
-
-function closePopupByClickOnOverlay(event) {
-  if (event.target === event.currentTarget) {
-    closePopup(event.currentTarget);
-  }
-}
-
-function closePopupByEscape(event) {
-  if (event.key === "Escape") {
-    const openedPopup = document.querySelector(".popup_opened");
-    closePopup(openedPopup);
-  }
-}
-
-function openPopup(popup) {
-  popup.classList.add("popup_opened");
-  document.addEventListener("keydown", closePopupByEscape);
-}
+const profilePopup = new Popup(popupProfileElement);
+const cardPopup = new Popup(popupCardElement);
+const photoPopup = new Popup(popupPhotoElement);
 
 function openProfilePopup() {
   popupNameInputElement.value = profileTitleElement.textContent;
   popupTextInputElement.value = profileSubtitleElement.textContent;
   profileFormValidator.resetValidation();
-  openPopup(popupProfileElement);
+  profilePopup.open();
 }
 
 function openCardPopup() {
   popupCardFormElement.reset();
   cardFormValidator.resetValidation();
-  openPopup(popupCardElement);
+  cardPopup.open();
 }
 
 function createCard(name, link) {
@@ -127,32 +96,26 @@ function handleFormProfileSubmit(evt) {
   evt.preventDefault();
   profileTitleElement.textContent = popupNameInputElement.value;
   profileSubtitleElement.textContent = popupTextInputElement.value;
-  closePopup(popupProfileElement);
+  profilePopup.close();
 }
 
 function handleFormCardSubmit(event) {
   event.preventDefault();
   const card = createCard(popupTitleInputElement.value, popupLinkInputElement.value);
   cardsList.addItem(card, 'prepend')
-  closePopup(popupCardElement);
+  cardPopup.close();
 }
 
 function handleCardClick(name, link) {
-  photoPopup.querySelector(".popup__description").textContent = name;
-  photoPopup.querySelector(".popup__image").src = link;
-  photoPopup.querySelector(".popup__image").alt = name;
+  popupPhotoElement.querySelector(".popup__description").textContent = name;
+  popupPhotoElement.querySelector(".popup__image").src = link;
+  popupPhotoElement.querySelector(".popup__image").alt = name;
 
-  openPopup(photoPopup);
+  photoPopup.open();
 }
 
 popupProfileOpenButtonElement.addEventListener("click", openProfilePopup);
 popupCardOpenButtonElement.addEventListener("click", openCardPopup);
-popupProfileCloseButtonElement.addEventListener("click", closeProfilePopup);
-popupCardCloseButtonElement.addEventListener("click", closeCardPopup);
-popupPhotoCloseButtonElement.addEventListener("click", closePhotoPopup);
-popupPhotoElement.addEventListener("click", closePopupByClickOnOverlay);
-popupProfileElement.addEventListener("click", closePopupByClickOnOverlay);
-popupCardElement.addEventListener("click", closePopupByClickOnOverlay);
 popupProfileFormElement.addEventListener("submit", handleFormProfileSubmit);
 popupCardFormElement.addEventListener("submit", handleFormCardSubmit);
 
