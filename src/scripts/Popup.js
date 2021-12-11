@@ -23,7 +23,6 @@ export class Popup {
 
   open() {
     this._popup.classList.add("popup_opened");
-    this.setEventListeners();
     document.addEventListener("keydown", this._handleEscClose.bind(this));
   }
 

@@ -13,7 +13,6 @@ const params = {
   errorClass: 'popup__error'
 }
 
-
 const initialCards = [
   {
     name: 'Архыз',
@@ -50,8 +49,6 @@ const profileTitleElement = document.querySelector('.profile__title');
 const profileSubtitleElement = document.querySelector('.profile__subtitle');
 const popupNameInputElement = popupProfileElement.querySelector('.popup__input_field_name');
 const popupTextInputElement = popupProfileElement.querySelector('.popup__input_field_text');
-const popupTitleInputElement = popupCardElement.querySelector('.popup__input_field_title');
-const popupLinkInputElement = popupCardElement.querySelector('.popup__input_field_link');
 const popupProfileFormElement = popupProfileElement.querySelector('.popup__form');
 const popupCardFormElement = popupCardElement.querySelector('.popup__form');
 const cardTemplate = document.querySelector(".card_template").content;
@@ -60,29 +57,35 @@ const cardContainer = document.querySelector(".cards__list");
 const profileFormValidator = new FormValidator(params, popupProfileFormElement);
 const cardFormValidator = new FormValidator(params, popupCardFormElement);
 
-
 const profilePopup = new PopupWithForm({
-  handleFormSubmit: (inputs) => {
-    console.log(inputs)
-    profileTitleElement.textContent = popupNameInputElement.value;
-    profileSubtitleElement.textContent = popupTextInputElement.value;
+  handleFormSubmit: ({ name, text }) => {
+    profileTitleElement.textContent = name;
+    profileSubtitleElement.textContent = text;
     profilePopup.close();
   },
   selector: popupProfileElement
 });
 
-
-
 const cardPopup = new PopupWithForm( {
-  handleFormSubmit: (inputs) => {
-    console.log(inputs)
-    const card = createCard(popupTitleInputElement.value, popupLinkInputElement.value);
+  handleFormSubmit: ({ title, link }) => {
+    const card = createCard(title, link);
     cardsList.addItem(card, 'prepend')
     cardPopup.close();
   },
   selector: popupCardElement
 } );
+
 const photoPopup = new PopupWithImage(popupPhotoElement);
+
+const cardsList = new Section({
+  items: initialCards,
+  renderer: (item) => {
+      const card = createCard(item.name, item.link);
+      cardsList.addItem(card, 'append');
+    },
+  },
+  cardContainer
+);
 
 function openProfilePopup() {
   popupNameInputElement.value = profileTitleElement.textContent;
@@ -101,40 +104,18 @@ function createCard(name, link) {
   return new Card(name, link, cardTemplate, handleCardClick).createCard()
 }
 
-const cardsList = new Section({
-  items: initialCards,
-  renderer: (item) => {
-      const card = createCard(item.name, item.link);
-      cardsList.addItem(card, 'append');
-    },
-  },
-  cardContainer
-);
-
-// function handleFormProfileSubmit(evt) {
-//   evt.preventDefault();
-//   profileTitleElement.textContent = popupNameInputElement.value;
-//   profileSubtitleElement.textContent = popupTextInputElement.value;
-//   profilePopup.close();
-// }
-
-// function handleFormCardSubmit(event) {
-//   event.preventDefault();
-//   const card = createCard(popupTitleInputElement.value, popupLinkInputElement.value);
-//   cardsList.addItem(card, 'prepend')
-//   cardPopup.close();
-// }
-
 function handleCardClick(name, link) {
   photoPopup.open(name, link);
 }
 
 popupProfileOpenButtonElement.addEventListener("click", openProfilePopup);
 popupCardOpenButtonElement.addEventListener("click", openCardPopup);
-// popupProfileFormElement.addEventListener("submit", handleFormProfileSubmit);
-// popupCardFormElement.addEventListener("submit", handleFormCardSubmit);
 
 profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
+
+profilePopup.setEventListeners();
+photoPopup.setEventListeners();
+cardPopup.setEventListeners();
 
 cardsList.renderItems();
