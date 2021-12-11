@@ -3,6 +3,7 @@ import { Card } from './Card.js'
 import { Section } from './Section.js'
 import { PopupWithImage } from './PopupWithImage.js'
 import { PopupWithForm } from './PopupWithForm.js'
+import { UserInfo } from './UserInfo.js'
 
 const params = {
   formSelector: '.popup__form',
@@ -45,8 +46,6 @@ const popupCardOpenButtonElement = document.querySelector('.profile__add-button'
 const popupProfileElement = document.querySelector('.popup_profile');
 const popupCardElement = document.querySelector('.popup_card');
 const popupPhotoElement = document.querySelector('.popup_photo');
-const profileTitleElement = document.querySelector('.profile__title');
-const profileSubtitleElement = document.querySelector('.profile__subtitle');
 const popupNameInputElement = popupProfileElement.querySelector('.popup__input_field_name');
 const popupTextInputElement = popupProfileElement.querySelector('.popup__input_field_text');
 const popupProfileFormElement = popupProfileElement.querySelector('.popup__form');
@@ -57,10 +56,11 @@ const cardContainer = document.querySelector(".cards__list");
 const profileFormValidator = new FormValidator(params, popupProfileFormElement);
 const cardFormValidator = new FormValidator(params, popupCardFormElement);
 
+const userInfo = new UserInfo({ name: popupNameInputElement.value, text: popupTextInputElement.value });
+
 const profilePopup = new PopupWithForm({
-  handleFormSubmit: ({ name, text }) => {
-    profileTitleElement.textContent = name;
-    profileSubtitleElement.textContent = text;
+  handleFormSubmit: (inputs) => {
+    userInfo.setUserInfo(inputs);
     profilePopup.close();
   },
   selector: popupProfileElement
@@ -88,8 +88,9 @@ const cardsList = new Section({
 );
 
 function openProfilePopup() {
-  popupNameInputElement.value = profileTitleElement.textContent;
-  popupTextInputElement.value = profileSubtitleElement.textContent;
+  const {name, text} = userInfo.getUserInfo();
+  popupNameInputElement.value = name;
+  popupTextInputElement.value = text;
   profileFormValidator.resetValidation();
   profilePopup.open();
 }
