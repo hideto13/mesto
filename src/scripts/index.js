@@ -1,8 +1,8 @@
 import { FormValidator } from './FormValidator.js'
 import { Card } from './Card.js'
 import { Section } from './Section.js'
-import { Popup } from './Popup.js'
 import { PopupWithImage } from './PopupWithImage.js'
+import { PopupWithForm } from './PopupWithForm.js'
 
 const params = {
   formSelector: '.popup__form',
@@ -61,8 +61,27 @@ const profileFormValidator = new FormValidator(params, popupProfileFormElement);
 const cardFormValidator = new FormValidator(params, popupCardFormElement);
 
 
-const profilePopup = new Popup(popupProfileElement);
-const cardPopup = new Popup(popupCardElement);
+const profilePopup = new PopupWithForm({
+  handleFormSubmit: (inputs) => {
+    console.log(inputs)
+    profileTitleElement.textContent = popupNameInputElement.value;
+    profileSubtitleElement.textContent = popupTextInputElement.value;
+    profilePopup.close();
+  },
+  selector: popupProfileElement
+});
+
+
+
+const cardPopup = new PopupWithForm( {
+  handleFormSubmit: (inputs) => {
+    console.log(inputs)
+    const card = createCard(popupTitleInputElement.value, popupLinkInputElement.value);
+    cardsList.addItem(card, 'prepend')
+    cardPopup.close();
+  },
+  selector: popupCardElement
+} );
 const photoPopup = new PopupWithImage(popupPhotoElement);
 
 function openProfilePopup() {
@@ -92,19 +111,19 @@ const cardsList = new Section({
   cardContainer
 );
 
-function handleFormProfileSubmit(evt) {
-  evt.preventDefault();
-  profileTitleElement.textContent = popupNameInputElement.value;
-  profileSubtitleElement.textContent = popupTextInputElement.value;
-  profilePopup.close();
-}
+// function handleFormProfileSubmit(evt) {
+//   evt.preventDefault();
+//   profileTitleElement.textContent = popupNameInputElement.value;
+//   profileSubtitleElement.textContent = popupTextInputElement.value;
+//   profilePopup.close();
+// }
 
-function handleFormCardSubmit(event) {
-  event.preventDefault();
-  const card = createCard(popupTitleInputElement.value, popupLinkInputElement.value);
-  cardsList.addItem(card, 'prepend')
-  cardPopup.close();
-}
+// function handleFormCardSubmit(event) {
+//   event.preventDefault();
+//   const card = createCard(popupTitleInputElement.value, popupLinkInputElement.value);
+//   cardsList.addItem(card, 'prepend')
+//   cardPopup.close();
+// }
 
 function handleCardClick(name, link) {
   photoPopup.open(name, link);
@@ -112,8 +131,8 @@ function handleCardClick(name, link) {
 
 popupProfileOpenButtonElement.addEventListener("click", openProfilePopup);
 popupCardOpenButtonElement.addEventListener("click", openCardPopup);
-popupProfileFormElement.addEventListener("submit", handleFormProfileSubmit);
-popupCardFormElement.addEventListener("submit", handleFormCardSubmit);
+// popupProfileFormElement.addEventListener("submit", handleFormProfileSubmit);
+// popupCardFormElement.addEventListener("submit", handleFormCardSubmit);
 
 profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
