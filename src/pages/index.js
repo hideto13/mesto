@@ -57,39 +57,43 @@ const cardContainer = document.querySelector(".cards__list");
 const profileFormValidator = new FormValidator(params, popupProfileFormElement);
 const cardFormValidator = new FormValidator(params, popupCardFormElement);
 
-const userInfo = new UserInfo({ name: popupNameInputElement.value, text: popupTextInputElement.value });
+const userInfo = new UserInfo({
+  name: popupNameInputElement.value,
+  text: popupTextInputElement.value,
+});
 
 const profilePopup = new PopupWithForm({
   handleFormSubmit: (inputs) => {
     userInfo.setUserInfo(inputs);
     profilePopup.close();
   },
-  selector: popupProfileElement
+  selector: popupProfileElement,
 });
 
-const cardPopup = new PopupWithForm( {
+const cardPopup = new PopupWithForm({
   handleFormSubmit: ({ title, link }) => {
     const card = createCard(title, link);
-    cardsList.addItem(card, 'prepend')
+    cardsList.addItem(card, "prepend");
     cardPopup.close();
   },
-  selector: popupCardElement
-} );
+  selector: popupCardElement,
+});
 
 const photoPopup = new PopupWithImage(popupPhotoElement);
 
-const cardsList = new Section({
-  items: initialCards,
-  renderer: (item) => {
+const cardsList = new Section(
+  {
+    items: initialCards,
+    renderer: (item) => {
       const card = createCard(item.name, item.link);
-      cardsList.addItem(card, 'append');
+      cardsList.addItem(card, "append");
     },
   },
   cardContainer
 );
 
 function openProfilePopup() {
-  const {name, text} = userInfo.getUserInfo();
+  const { name, text } = userInfo.getUserInfo();
   popupNameInputElement.value = name;
   popupTextInputElement.value = text;
   profileFormValidator.resetValidation();
@@ -103,11 +107,11 @@ function openCardPopup() {
 }
 
 function createCard(name, link) {
-  return new Card(name, link, cardTemplate, handleCardClick).createCard()
-}
-
-function handleCardClick(name, link) {
-  photoPopup.open(name, link);
+  return new Card(name, link, cardTemplate, {
+    handleCardClick: (name, link) => {
+      photoPopup.open(name, link);
+    },
+  }).createCard();
 }
 
 popupProfileOpenButtonElement.addEventListener("click", openProfilePopup);
