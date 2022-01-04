@@ -1,7 +1,7 @@
 .card__delete-button {
   width: 18px;
   height: 19px;
-  background: transparent center url("../../../images/__delete-button.svg");
+  background: transparent center url("../../../images/delete-button.svg");
   background-size: auto;
   border: none;
   transition: opacity 0.3s ease;
@@ -15,4 +15,3 @@
 .popup__close:hover {
   opacity: 0.6;
 }
-

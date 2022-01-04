@@ -1,7 +1,7 @@
 .popup__close {
   width: 32px;
   height: 32px;
-  background: transparent center url("../../../images/__close.svg");
+  background: transparent center url("../../../images/close.svg");
   background-size: auto;
   border: none;
   transition: opacity 0.3s ease;
