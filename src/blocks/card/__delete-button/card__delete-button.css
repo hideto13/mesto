@@ -10,6 +10,7 @@
   right: 20px;
   padding: 0;
   cursor: pointer;
+  display: none;
 }
 
 .popup__close:hover {

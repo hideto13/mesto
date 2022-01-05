@@ -9,7 +9,7 @@ export class Section {
   renderItems() {
     this._items
       .then((items) => {
-        items.forEach((item) => this._renderer(item));
+        items.forEach((item) => this._renderer(item.name, item.link));
       })
       .catch((err) => console.log(err));
   }
@@ -23,12 +23,12 @@ export class Section {
   }
 
   addCard(name, link, element, method) {
-    this._api
-      .addCard(name, link)
-      .then((info) => {
-        console.log(info);
-      })
-      .catch((err) => console.log(err));
+    // this._api
+    //   .addCard(name, link)
+    //   .then((info) => {
+    //     console.log(info);
+    //   })
+    //   .catch((err) => console.log(err));
     if (method === "append") {
       this._container.append(element);
     } else {

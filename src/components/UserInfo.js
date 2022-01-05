@@ -9,7 +9,6 @@ export class UserInfo {
     this._api
       .getUserInfo()
       .then((info) => {
-        console.log(info);
         this._name.textContent = info.name;
         this._text.textContent = info.about;
       })
@@ -20,7 +19,6 @@ export class UserInfo {
     this._api
       .getUserInfo()
       .then((info) => {
-        console.log(info);
         nameInputElement.value = info.name;
         textInputElement.value = info.about;
       })

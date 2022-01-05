@@ -125,13 +125,23 @@
           <figcaption class="popup__description"></figcaption>
         </figure>
       </section>
+      <section class="popup popup_delete">
+        <div class="popup__container popup__container_popup_delete">
+          <button class="popup__close" type="button"></button>
+          <h2 class="popup__title popup__title_popup_delete">Вы уверены?</h2>
+          <button class="popup__submit-button" type="button">Да</button>
+        </div>
+      </section>
     </div>
     <template class="card_template">
       <li class="card">
         <img class="card__image" />
         <div class="card__description">
           <h2 class="card__text"></h2>
-          <button class="card__like-button" type="button"></button>
+          <div class="card__like-container">
+            <button class="card__like-button" type="button"></button>
+            <p class="card__like-text">1</p>
+          </div>
         </div>
         <button class="card__delete-button" type="button"></button>
       </li>
