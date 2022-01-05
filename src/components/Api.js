@@ -28,10 +28,14 @@ export class Api {
     });
   }
 
-  setUserInfo() {
+  setUserInfo(name, about) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        about: about,
+      }),
     }).then((res) => {
       if (res.ok) {
         return res.json();
@@ -40,20 +44,19 @@ export class Api {
     });
   }
 
-
-  // getInitialCards() {
-  //   return fetch(`${this._baseUrl}/users/me`, {
-  //     method: 'GET',
-  //     headers: this._headers
-  //   })
-  //     .then(res => {
-  //       if (res.ok) {
-  //         return res.json();
-  //       }
-  //     })
-  //     .then((result) => {
-  //       console.log(result);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }
+  addCard(name, link) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        link: link,
+      }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject("Произошла ошибка");
+    });
+  }
 }

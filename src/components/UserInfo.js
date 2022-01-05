@@ -16,7 +16,6 @@ export class UserInfo {
       .catch((err) => console.log(err));
   }
 
-
   getUserInfo(nameInputElement, textInputElement) {
     this._api
       .getUserInfo()
@@ -33,8 +32,18 @@ export class UserInfo {
   //   return info;
   // }
 
+  // setUserInfo({ name, text }) {
+  //   this._name.textContent = name;
+  //   this._text.textContent = text;
+  // }
+
   setUserInfo({ name, text }) {
-    this._name.textContent = name;
-    this._text.textContent = text;
+    this._api
+      .setUserInfo(name, text)
+      .then((info) => {
+        this._name.textContent = info.name;
+        this._text.textContent = info.about;
+      })
+      .catch((err) => console.log(err));
   }
 }

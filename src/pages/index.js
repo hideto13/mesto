@@ -56,7 +56,8 @@ const profilePopup = new PopupWithForm({
 const cardPopup = new PopupWithForm({
   handleFormSubmit: ({ title, link }) => {
     const card = createCard(title, link);
-    cardsList.addItem(card, "prepend");
+
+    cardsList.addCard(title, link, card, "prepend");
     cardPopup.close();
   },
   popupSelector: ".popup_card",
@@ -66,13 +67,14 @@ const photoPopup = new PopupWithImage(".popup_photo");
 
 const cardsList = new Section(
   {
-    items: initialCards,
+    items: api.getInitialCards(),
     renderer: (item) => {
       const card = createCard(item.name, item.link);
       cardsList.addItem(card, "append");
     },
   },
-  cardContainer
+  cardContainer,
+  api
 );
 
 function openProfilePopup() {
