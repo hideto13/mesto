@@ -55,12 +55,19 @@ const profilePopup = new PopupWithForm({
   popupSelector: ".popup_profile",
 });
 
+const avatarPopup = new PopupWithForm({
+  handleFormSubmit: (inputs) => {
+    userInfo.setUserInfo(inputs);
+    profilePopup.close();
+  },
+  popupSelector: ".popup_profile",
+});
+
 const cardPopup = new PopupWithForm({
   handleFormSubmit: ({ title, link }) => {
     api
       .addCard(title, link)
       .then((item) => {
-        console.log(item);
         const card = createCard(
           item.name,
           item.link,
