@@ -26,19 +26,35 @@ export class Card {
   }
 
   _handleLike() {
-    this._likeButton.classList.toggle("card__like-button_active");
-    console.log(this._owner);
+    if (this._likeButton.classList.contains("card__like-button_active")) {
+      this._api
+        .deleteLike(this._id)
+        .then((info) => {
+          this._likeButton.classList.remove("card__like-button_active");
+          this._likes = info.likes;
+          this._likeText.textContent = this._likes.length;
+        })
+        .catch((err) => console.log(err));
+    } else {
+      this._api
+        .addLike(this._id)
+        .then((info) => {
+          this._likeButton.classList.add("card__like-button_active");
+          this._likes = info.likes;
+          this._likeText.textContent = this._likes.length;
+        })
+        .catch((err) => console.log(err));
+    }
   }
 
   _handleDelete() {
-    this._card.remove();
     this._api
       .deleteCard(this._id)
-      .then((info) => {
-        console.log(info)
+      .then(() => {
+        this._card.remove();
+        this._deletePopup.close();
       })
       .catch((err) => console.log(err));
-    this._deletePopup.close();
   }
 
   _submitDelete() {

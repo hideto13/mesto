@@ -7,7 +7,7 @@ import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo } from "../components/UserInfo.js";
 import { Api } from "../components/Api.js";
-import { params, initialCards } from "../utils/constants.js";
+import { params } from "../utils/constants.js";
 
 const popupProfileOpenButtonElement = document.querySelector(
   ".profile__edit-button"
@@ -43,6 +43,7 @@ const api = new Api({
 const userInfo = new UserInfo({
   name: ".profile__title",
   text: ".profile__subtitle",
+  avatar: ".profile__image",
   api: api,
 });
 
@@ -55,11 +56,11 @@ const profilePopup = new PopupWithForm({
 });
 
 const cardPopup = new PopupWithForm({
-  handleFormSubmit: ({title, link}) => {
+  handleFormSubmit: ({ title, link }) => {
     api
       .addCard(title, link)
       .then((item) => {
-        console.log(item.owner);
+        console.log(item);
         const card = createCard(
           item.name,
           item.link,
@@ -102,22 +103,10 @@ const cardsList = new Section(
     //   );
     //   cardsList.addCard(item.name, item.link, card, "append");
     // },
-    renderer: (name, link) => {
-      api
-        .addCard(name, link)
-        .then((item) => {
-          console.log(item.owner);
-          const card = createCard(
-            item.name,
-            item.link,
-            item.likes,
-            item._id,
-            item.owner
-          );
+    renderer: (name, link, likes, id, owner) => {
+      const card = createCard(name, link, likes, id, owner);
 
-          cardsList.addCard(item.name, item.link, card, "prepend");
-        })
-        .catch((err) => console.log(err));
+      cardsList.addCard(name, link, card, "prepend");
     },
   },
   cardContainer,

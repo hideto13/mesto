@@ -9,7 +9,16 @@ export class Section {
   renderItems() {
     this._items
       .then((items) => {
-        items.forEach((item) => this._renderer(item.name, item.link));
+
+        items.forEach((item) => {
+          this._renderer(
+            item.name,
+            item.link,
+            item.likes,
+            item._id,
+            item.owner
+          );
+        });
       })
       .catch((err) => console.log(err));
   }

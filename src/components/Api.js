@@ -28,13 +28,29 @@ export class Api {
     });
   }
 
-  setUserInfo(name, about) {
+  setUserInfo(name, about, avatar) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
         name: name,
         about: about,
+        avatar: avatar,
+      }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject("Произошла ошибка");
+    });
+  }
+
+  setAvatar(avatar) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: avatar,
       }),
     }).then((res) => {
       if (res.ok) {
@@ -68,7 +84,31 @@ export class Api {
       if (res.ok) {
         return res.json();
       }
+      return Promise.reject("Произошла ошибка2");
+    });
+  }
+
+  addLike(id) {
+    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
+      method: "PUT",
+      headers: this._headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
       return Promise.reject("Произошла ошибка1");
+    });
+  }
+
+  deleteLike(id) {
+    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject("Произошла ошибка2");
     });
   }
 }
