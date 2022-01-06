@@ -15,8 +15,12 @@ const popupProfileOpenButtonElement = document.querySelector(
 const popupCardOpenButtonElement = document.querySelector(
   ".profile__add-button"
 );
+const popupAvatarOpenButtonElement = document.querySelector(
+  ".profile__avatar-button"
+);
 const popupProfileElement = document.querySelector(".popup_profile");
 const popupCardElement = document.querySelector(".popup_card");
+const popupAvatarElement = document.querySelector(".popup_avatar");
 const popupNameInputElement = popupProfileElement.querySelector(
   ".popup__input_field_name"
 );
@@ -26,11 +30,13 @@ const popupTextInputElement = popupProfileElement.querySelector(
 const popupProfileFormElement =
   popupProfileElement.querySelector(".popup__form");
 const popupCardFormElement = popupCardElement.querySelector(".popup__form");
+const popupAvatarFormElement = popupAvatarElement.querySelector(".popup__form");
 const cardTemplate = document.querySelector(".card_template").content;
 const cardContainer = document.querySelector(".cards__list");
 
 const profileFormValidator = new FormValidator(params, popupProfileFormElement);
 const cardFormValidator = new FormValidator(params, popupCardFormElement);
+const avatarFormValidator = new FormValidator(params, popupAvatarFormElement);
 
 const api = new Api({
   baseUrl: "https://mesto.nomoreparties.co/v1/cohort-33",
@@ -56,11 +62,11 @@ const profilePopup = new PopupWithForm({
 });
 
 const avatarPopup = new PopupWithForm({
-  handleFormSubmit: (inputs) => {
-    userInfo.setUserInfo(inputs);
-    profilePopup.close();
+  handleFormSubmit: (input) => {
+    userInfo.setAvatar(input.avatar);
+    avatarPopup.close();
   },
-  popupSelector: ".popup_profile",
+  popupSelector: ".popup_avatar",
 });
 
 const cardPopup = new PopupWithForm({
@@ -134,6 +140,11 @@ function openCardPopup() {
   cardPopup.open();
 }
 
+function openAvatarPopup() {
+  avatarFormValidator.resetValidation();
+  avatarPopup.open();
+}
+
 function createCard(name, link, likes, id, owner) {
   return new Card(
     name,
@@ -154,14 +165,17 @@ function createCard(name, link, likes, id, owner) {
 
 popupProfileOpenButtonElement.addEventListener("click", openProfilePopup);
 popupCardOpenButtonElement.addEventListener("click", openCardPopup);
+popupAvatarOpenButtonElement.addEventListener("click", openAvatarPopup);
 
 profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
+avatarFormValidator.enableValidation();
 
 profilePopup.setEventListeners();
 photoPopup.setEventListeners();
 cardPopup.setEventListeners();
 deletePopup.setEventListeners();
+avatarPopup.setEventListeners();
 
 cardsList.renderItems();
 userInfo.gettUserInfo();

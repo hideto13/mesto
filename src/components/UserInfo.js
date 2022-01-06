@@ -46,4 +46,13 @@ export class UserInfo {
       })
       .catch((err) => console.log(err));
   }
+
+  setAvatar(avatar) {
+    this._api
+      .setAvatar(avatar)
+      .then((info) => {
+        this._avatar.src = info.avatar
+      })
+      .catch((err) => console.log(err));
+  }
 }
