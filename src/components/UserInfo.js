@@ -6,18 +6,18 @@ export class UserInfo {
     this._api = api;
   }
 
-  gettUserInfo() {
+  getUserInfo() {
     this._api
       .getUserInfo()
       .then((info) => {
         this._name.textContent = info.name;
         this._text.textContent = info.about;
-        this._avatar.src = info.avatar
+        this._avatar.src = info.avatar;
       })
       .catch((err) => console.log(err));
   }
 
-  getUserInfo(nameInputElement, textInputElement) {
+  setPopupUserInfo(nameInputElement, textInputElement) {
     this._api
       .getUserInfo()
       .then((info) => {
@@ -26,16 +26,6 @@ export class UserInfo {
       })
       .catch((err) => console.log(err));
   }
-
-  // getUserInfo() {
-  //   const info = { name: this._name.textContent, text: this._text.textContent };
-  //   return info;
-  // }
-
-  // setUserInfo({ name, text }) {
-  //   this._name.textContent = name;
-  //   this._text.textContent = text;
-  // }
 
   setUserInfo({ name, text }) {
     this._api
@@ -51,7 +41,7 @@ export class UserInfo {
     this._api
       .setAvatar(avatar)
       .then((info) => {
-        this._avatar.src = info.avatar
+        this._avatar.src = info.avatar;
       })
       .catch((err) => console.log(err));
   }

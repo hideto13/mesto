@@ -12,7 +12,7 @@ export class Api {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject("Произошла ошибка");
+      return Promise.reject(`Ошибка: ${res.status}`);
     });
   }
 
@@ -24,7 +24,7 @@ export class Api {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject("Произошла ошибка");
+      return Promise.reject(`Ошибка: ${res.status}`);
     });
   }
 
@@ -41,7 +41,7 @@ export class Api {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject("Произошла ошибка");
+      return Promise.reject(`Ошибка: ${res.status}`);
     });
   }
 
@@ -56,7 +56,7 @@ export class Api {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject("Произошла ошибка");
+      return Promise.reject(`Ошибка: ${res.status}`);
     });
   }
 
@@ -72,7 +72,7 @@ export class Api {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject("Произошла ошибка1");
+      return Promise.reject(`Ошибка: ${res.status}`);
     });
   }
 
@@ -84,7 +84,7 @@ export class Api {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject("Произошла ошибка2");
+      return Promise.reject(`Ошибка: ${res.status}`);
     });
   }
 
@@ -96,7 +96,7 @@ export class Api {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject("Произошла ошибка1");
+      return Promise.reject(`Ошибка: ${res.status}`);
     });
   }
 
@@ -108,7 +108,7 @@ export class Api {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject("Произошла ошибка2");
+      return Promise.reject(`Ошибка: ${res.status}`);
     });
   }
 }
