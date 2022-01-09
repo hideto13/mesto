@@ -1,48 +1,33 @@
 export class UserInfo {
-  constructor({ name, text, avatar, api }) {
+  constructor({
+    name,
+    text,
+    avatar,
+    getUserInfo,
+    setPopupUserInfo,
+    setUserInfo,
+    setAvatar,
+  }) {
     this._name = document.querySelector(name);
     this._text = document.querySelector(text);
     this._avatar = document.querySelector(avatar);
-    this._api = api;
+    this.getUserInfo = getUserInfo;
+    this.setPopupUserInfo = setPopupUserInfo;
+    this.setUserInfo = setUserInfo;
+    this.setAvatar = setAvatar;
   }
 
-  getUserInfo() {
-    this._api
-      .getUserInfo()
-      .then((info) => {
-        this._name.textContent = info.name;
-        this._text.textContent = info.about;
-        this._avatar.src = info.avatar;
-      })
-      .catch((err) => console.log(err));
+  _handleUserInfo(info) {
+    this._name.textContent = info.name;
+    this._text.textContent = info.about;
   }
 
-  setPopupUserInfo(nameInputElement, textInputElement) {
-    this._api
-      .getUserInfo()
-      .then((info) => {
-        nameInputElement.value = info.name;
-        textInputElement.value = info.about;
-      })
-      .catch((err) => console.log(err));
+  _handleAvatar(info) {
+    this._avatar.src = info.avatar;
   }
 
-  setUserInfo({ name, text }) {
-    this._api
-      .setUserInfo(name, text)
-      .then((info) => {
-        this._name.textContent = info.name;
-        this._text.textContent = info.about;
-      })
-      .catch((err) => console.log(err));
-  }
-
-  setAvatar(avatar) {
-    this._api
-      .setAvatar(avatar)
-      .then((info) => {
-        this._avatar.src = info.avatar;
-      })
-      .catch((err) => console.log(err));
+  _handlePopupUserInfo(info, nameInputElement, textInputElement) {
+    nameInputElement.value = info.name;
+    textInputElement.value = info.about;
   }
 }

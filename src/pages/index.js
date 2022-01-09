@@ -59,13 +59,15 @@ const userInfo = new UserInfo({
   name: ".profile__title",
   text: ".profile__subtitle",
   avatar: ".profile__image",
-  api: api,
+  getUserInfo: getUserInfo,
+  setPopupUserInfo: setPopupUserInfo,
+  setUserInfo: setUserInfo,
+  setAvatar: setAvatar,
 });
 
 const profilePopup = new PopupWithForm({
   handleFormSubmit: (inputs) => {
     userInfo.setUserInfo(inputs);
-    profilePopup.close();
     popupProfileSubmitButton.textContent = "Сохранить";
   },
   popupSelector: ".popup_profile",
@@ -74,7 +76,6 @@ const profilePopup = new PopupWithForm({
 const avatarPopup = new PopupWithForm({
   handleFormSubmit: (input) => {
     userInfo.setAvatar(input.avatar);
-    avatarPopup.close();
     popupAvatarSubmitButton.textContent = "Сохранить";
   },
   popupSelector: ".popup_avatar",
@@ -99,7 +100,6 @@ const cardPopup = new PopupWithForm({
       .catch((err) => console.log(err));
   },
   popupSelector: ".popup_card",
-  api: api,
 });
 
 const photoPopup = new PopupWithImage(".popup_photo");
@@ -114,9 +114,82 @@ const cardsList = new Section(
       cardsList.addItem(card, "append");
     },
   },
-  cardContainer,
-  api
+  cardContainer
 );
+
+function handleLike(id) {
+  api
+    .addLike(id)
+    .then((info) => this._switchLike(info))
+    .catch((err) => console.log(err));
+}
+
+function handleDislike(id) {
+  api
+    .deleteLike(id)
+    .then((info) => this._switchDislike(info))
+    .catch((err) => console.log(err));
+}
+
+function handleDelete(id) {
+  api
+    .deleteCard(id)
+    .then(() => {
+      this._card.remove();
+      deletePopup.close();
+    })
+    .catch((err) => console.log(err));
+}
+
+function addDeleteButton() {
+  api
+    .getUserInfo()
+    .then((info) => {
+      if (info._id === this._owner) {
+        this._deleteButton.classList.add("card__delete-button_active");
+      }
+    })
+    .catch((err) => console.log(err));
+}
+
+function getUserInfo() {
+  api
+    .getUserInfo()
+    .then((info) => {
+      this._handleUserInfo(info);
+      this._handleAvatar(info);
+    })
+    .catch((err) => console.log(err));
+}
+
+function setPopupUserInfo(nameInputElement, textInputElement) {
+  api
+    .getUserInfo()
+    .then((info) =>
+      this._handlePopupUserInfo(info, nameInputElement, textInputElement)
+    )
+    .catch((err) => console.log(err));
+}
+
+function setUserInfo({ name, text }) {
+  api
+    .setUserInfo(name, text)
+    .then((info) => {
+      this._handleUserInfo(info);
+      profilePopup.close();
+    })
+    .catch((err) => console.log(err));
+}
+
+function setAvatar(avatar) {
+  api
+    .setAvatar(avatar)
+    .then((info) => {
+      this._handleAvatar(info);
+      avatarPopup.close();
+    })
+    .catch((err) => console.log(err));
+}
 
 function openProfilePopup() {
   userInfo.setPopupUserInfo(popupNameInputElement, popupTextInputElement);
@@ -135,21 +208,15 @@ function openAvatarPopup() {
 }
 
 function createCard(name, link, likes, id, owner) {
-  return new Card(
-    name,
-    link,
-    likes,
-    id,
-    owner,
-    cardTemplate,
-    deletePopup,
-    api,
-    {
-      handleCardClick: (name, link) => {
-        photoPopup.open(name, link);
-      },
-    }
-  ).createCard();
+  return new Card(name, link, likes, id, owner, cardTemplate, deletePopup, {
+    handleCardClick: (name, link) => {
+      photoPopup.open(name, link);
+    },
+    handleLike: handleLike,
+    handleDislike: handleDislike,
+    handleDelete: handleDelete,
+    addDeleteButton: addDeleteButton,
+  }).createCard();
 }
 
 popupProfileOpenButtonElement.addEventListener("click", openProfilePopup);

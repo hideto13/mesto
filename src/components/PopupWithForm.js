@@ -1,11 +1,10 @@
 import { Popup } from "./Popup.js";
 
 export class PopupWithForm extends Popup {
-  constructor({ handleFormSubmit, popupSelector, api }) {
+  constructor({ handleFormSubmit, popupSelector }) {
     super(popupSelector);
     this._form = this._popup.querySelector(".popup__form");
     this._handleFormSubmit = handleFormSubmit;
-    this._api = api;
     this._inputs = Array.from(this._form.querySelectorAll(".popup__input"));
     this._submitButton = this._form.querySelector(".popup__submit-button");
   }
