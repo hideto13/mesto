@@ -152,6 +152,13 @@ function addDeleteButton() {
     .catch((err) => console.log(err));
 }
 
+function getIsLikedByUser() {
+  api
+    .getUserInfo()
+    .then((info) => this._setInitialLike(info))
+    .catch((err) => console.log(err));
+}
+
 function getUserInfo() {
   api
     .getUserInfo()
@@ -216,6 +223,7 @@ function createCard(name, link, likes, id, owner) {
     handleDislike: handleDislike,
     handleDelete: handleDelete,
     addDeleteButton: addDeleteButton,
+    getIsLikedByUser: getIsLikedByUser,
   }).createCard();
 }
 

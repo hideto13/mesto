@@ -13,6 +13,7 @@ export class Card {
       handleDislike,
       handleDelete,
       addDeleteButton,
+      getIsLikedByUser,
     }
   ) {
     this._name = name;
@@ -26,6 +27,7 @@ export class Card {
     this._handleDislike = handleDislike;
     this._handleDelete = handleDelete;
     this._addDeleteButton = addDeleteButton;
+    this._getIsLikedByUser = getIsLikedByUser;
     this._deletePopup = deletePopup;
     this._submitDeletePopup = document.querySelector(".popup_delete");
     this._submitDeleteButton = this._submitDeletePopup.querySelector(
@@ -51,6 +53,13 @@ export class Card {
     this._likeButton.classList.remove("card__like-button_active");
     this._likes = info.likes;
     this._likeText.textContent = this._likes.length;
+  }
+
+  _setInitialLike(info) {
+    this._user = info._id;
+    if (this._likes.map((like) => like._id).includes(this._user)) {
+      this._likeButton.classList.add("card__like-button_active");
+    }
   }
 
   _submitDelete() {
@@ -94,6 +103,7 @@ export class Card {
     // this._ownId =
 
     this._addDeleteButton();
+    this._getIsLikedByUser();
     this._setListeners();
 
     return this._card;
