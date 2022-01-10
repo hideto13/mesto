@@ -25,7 +25,7 @@
 .card__like-container{align-items:center;display:flex;flex-direction:column}
 .card__like-text{font-size:13px;font-weight:400;line-height:16px;margin:0}
 .card__text{font-size:24px;font-weight:900;line-height:29px;margin:0;max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.card__image{height:282px;min-height:282px;-o-object-fit:cover;object-fit:cover;width:100%}
+.card__image{cursor:pointer;height:282px;min-height:282px;-o-object-fit:cover;object-fit:cover;transition:opacity .3s ease;width:100%}.card__image:hover{opacity:.8}
 .card__delete-button{background:transparent 50% url(images/delete-button.823b0cf1b0b7e9cb7cad.svg);background-size:auto;border:none;cursor:pointer;display:none;height:19px;padding:0;position:absolute;right:20px;top:20px;transition:opacity .3s ease;width:18px}.popup__close:hover{opacity:.6}
 .card__delete-button_active{display:block}
 .footer{font-family:Inter,Arial,sans-serif;padding:67px 0 60px}@media (max-width:1023px){.footer{padding:48px 19px 36px}}
