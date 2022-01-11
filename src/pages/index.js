@@ -95,9 +95,11 @@ const cardPopup = new PopupWithForm({
         );
         cardsList.addItem(card, "prepend");
         cardPopup.close();
-        popupCardSubmitButton.textContent = "Создать";
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => {
+        popupCardSubmitButton.textContent = "Создать";
+      });
   },
   popupSelector: ".popup_card",
 });
@@ -108,7 +110,7 @@ const deletePopup = new PopupWithConfirmation(".popup_delete");
 
 const cardsList = new Section(
   {
-    items: api.getInitialCards(),
+    getInitialCards: getInitialCards,
     renderer: (name, link, likes, id, owner) => {
       const card = createCard(name, link, likes, id, owner);
       cardsList.addItem(card, "append");
@@ -117,45 +119,45 @@ const cardsList = new Section(
   cardContainer
 );
 
+function getInitialCards() {
+  api
+    .getInitialCards()
+    .then((items) => this.renderItems(items))
+    .catch((err) => console.log(err));
+}
+
 function handleLike(id) {
   api
     .addLike(id)
-    .then((info) => this._switchLike(info))
+    .then((info) => this.switchLike(info))
     .catch((err) => console.log(err));
 }
 
 function handleDislike(id) {
   api
     .deleteLike(id)
-    .then((info) => this._switchDislike(info))
+    .then((info) => this.switchDislike(info))
     .catch((err) => console.log(err));
 }
 
 function handleDelete(id) {
   api
     .deleteCard(id)
-    .then(() => {
-      this._card.remove();
-      deletePopup.close();
-    })
+    .then(() => this.deleteCard())
     .catch((err) => console.log(err));
 }
 
 function addDeleteButton() {
   api
     .getUserInfo()
-    .then((info) => {
-      if (info._id === this._owner) {
-        this._deleteButton.classList.add("card__delete-button_active");
-      }
-    })
+    .then((info) => this.setDeleteButton(info))
     .catch((err) => console.log(err));
 }
 
 function getIsLikedByUser() {
   api
     .getUserInfo()
-    .then((info) => this._setInitialLike(info))
+    .then((info) => this.setInitialLike(info))
     .catch((err) => console.log(err));
 }
 
@@ -163,8 +165,8 @@ function getUserInfo() {
   api
     .getUserInfo()
     .then((info) => {
-      this._handleUserInfo(info);
-      this._handleAvatar(info);
+      this.handleUserInfo(info);
+      this.handleAvatar(info);
     })
     .catch((err) => console.log(err));
 }
@@ -173,7 +175,7 @@ function setPopupUserInfo(nameInputElement, textInputElement) {
   api
     .getUserInfo()
     .then((info) =>
-      this._handlePopupUserInfo(info, nameInputElement, textInputElement)
+      this.handlePopupUserInfo(info, nameInputElement, textInputElement)
     )
     .catch((err) => console.log(err));
 }
@@ -182,7 +184,7 @@ function setUserInfo({ name, text }) {
   api
     .setUserInfo(name, text)
     .then((info) => {
-      this._handleUserInfo(info);
+      this.handleUserInfo(info);
       profilePopup.close();
     })
     .catch((err) => console.log(err));
@@ -192,7 +194,7 @@ function setAvatar(avatar) {
   api
     .setAvatar(avatar)
     .then((info) => {
-      this._handleAvatar(info);
+      this.handleAvatar(info);
       avatarPopup.close();
     })
     .catch((err) => console.log(err));
@@ -241,5 +243,4 @@ cardPopup.setEventListeners();
 deletePopup.setEventListeners();
 avatarPopup.setEventListeners();
 
-cardsList.renderItems();
-userInfo.getUserInfo();
+Promise.all([userInfo.getUserInfo(), cardsList.getInitialCards()]);

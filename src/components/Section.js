@@ -1,24 +1,14 @@
 export class Section {
-  constructor({ items, renderer }, selector) {
-    this._items = items;
+  constructor({ getInitialCards, renderer }, selector) {
+    this.getInitialCards = getInitialCards;
     this._renderer = renderer;
     this._container = selector;
   }
 
-  renderItems() {
-    this._items
-      .then((items) => {
-        items.forEach((item) => {
-          this._renderer(
-            item.name,
-            item.link,
-            item.likes,
-            item._id,
-            item.owner
-          );
-        });
-      })
-      .catch((err) => console.log(err));
+  renderItems(items) {
+    items.forEach((item) => {
+      this._renderer(item.name, item.link, item.likes, item._id, item.owner);
+    });
   }
 
   addItem(element, method) {

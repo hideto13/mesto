@@ -17,16 +17,16 @@ export class UserInfo {
     this.setAvatar = setAvatar;
   }
 
-  _handleUserInfo(info) {
+  handleUserInfo(info) {
     this._name.textContent = info.name;
     this._text.textContent = info.about;
   }
 
-  _handleAvatar(info) {
+  handleAvatar(info) {
     this._avatar.src = info.avatar;
   }
 
-  _handlePopupUserInfo(info, nameInputElement, textInputElement) {
+  handlePopupUserInfo(info, nameInputElement, textInputElement) {
     nameInputElement.value = info.name;
     textInputElement.value = info.about;
   }

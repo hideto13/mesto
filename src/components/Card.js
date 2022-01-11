@@ -43,23 +43,34 @@ export class Card {
     }
   }
 
-  _switchLike(info) {
+  switchLike(info) {
     this._likeButton.classList.add("card__like-button_active");
     this._likes = info.likes;
     this._likeText.textContent = this._likes.length;
   }
 
-  _switchDislike(info) {
+  switchDislike(info) {
     this._likeButton.classList.remove("card__like-button_active");
     this._likes = info.likes;
     this._likeText.textContent = this._likes.length;
   }
 
-  _setInitialLike(info) {
+  setInitialLike(info) {
     this._user = info._id;
     if (this._likes.map((like) => like._id).includes(this._user)) {
       this._likeButton.classList.add("card__like-button_active");
     }
+  }
+
+  setDeleteButton(info) {
+    if (info._id === this._owner) {
+      this._deleteButton.classList.add("card__delete-button_active");
+    }
+  }
+
+  deleteCard() {
+    this._card.remove();
+    this._deletePopup.close();
   }
 
   _submitDelete() {
@@ -94,13 +105,6 @@ export class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
     this._likeText.textContent = this._likes.length;
-
-    // if (this._likes.map((like) => like._id).includes(this._owner)) {
-    //   this._likeButton.classList.add("card__like-button_active");
-    // }
-
-    // console.log(this._likes.map((like) => like._id));
-    // this._ownId =
 
     this._addDeleteButton();
     this._getIsLikedByUser();
